@@ -1,0 +1,44 @@
+schemaName: kow_global_data
+
+dataSources:
+  ds_1:
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://10.0.0.193:3306/player_90001
+    username: root
+    password: 123456
+    connectionTimeoutMilliseconds: 30000
+    idleTimeoutMilliseconds: 60000
+    maxLifetimeMilliseconds: 1800000
+    maxPoolSize: 10
+  ds_2:
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://10.0.0.193:3306/player_90002
+    username: root
+    password: 123456
+    connectionTimeoutMilliseconds: 30000
+    idleTimeoutMilliseconds: 60000
+    maxLifetimeMilliseconds: 1800000
+    maxPoolSize: 10
+
+rules:
+- !SHARDING
+  tables:
+    hero:
+      actualDataNodes: ds_${1..2}.hero
+  bindingTables:
+    - hero
+
+  defaultDatabaseStrategy:
+    hint:
+      shardingAlgorithmName: hint-common
+  defaultTableStrategy:
+    none:
+
+  shardingAlgorithms:
+    hint-common:
+      type: COMMON_SHARD
+
+props:
+  sql-show: true
