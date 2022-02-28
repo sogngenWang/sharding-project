@@ -20,11 +20,10 @@ public class HintAlgorithmTest {
                 Connection conn = dataSource.getConnection();
                 Statement statement = conn.createStatement();
         ) {
-            statement.execute("sctl:hint set DatabaseShardingValue=1");
-            statement.execute("select * from hero limit 1");
+            statement.execute("select * from test.hero limit 10");
             try (ResultSet rs = statement.getResultSet()) {
                 while (rs.next()) {
-                    System.out.println("result---------" + rs.getInt(1));
+                    System.out.println("result---------" + rs.getLong("id"));
                 }
             }
         }
